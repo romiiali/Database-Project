@@ -1,0 +1,181 @@
+﻿@page
+@model _202Project.Pages.Staff.MedicinesModel
+@{
+}
+
+<style>
+    .page-container {
+        max-width: 1200px;
+        margin: 30px auto;
+        padding: 25px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    .page-title {
+        color: #2c3e50;
+        margin-bottom: 30px;
+        font-size: 2.2rem;
+        font-weight: bold;
+        text-align: center;
+        padding-bottom: 15px;
+        border-bottom: 3px solid #3498db;
+    }
+
+    .add-button {
+        display: inline-block;
+        margin-bottom: 25px;
+        padding: 12px 25px;
+        background: #2ecc71;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .add-button:hover {
+        background: #27ae60;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+        text-decoration: none;
+        color: white;
+    }
+
+    .medicines-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    }
+
+    .medicines-table thead {
+        background: #3498db;
+        color: white;
+    }
+
+    .medicines-table th {
+        padding: 18px 15px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    .medicines-table td {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        color: #333;
+    }
+
+    .medicines-table tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .edit-btn {
+        padding: 8px 16px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+    }
+
+    .edit-btn:hover {
+        background: #2980b9;
+        text-decoration: none;
+        color: white;
+    }
+
+    .delete-form {
+        display: inline;
+    }
+
+    .delete-btn {
+        padding: 8px 16px;
+        background: #e74c3c;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .delete-btn:hover {
+        background: #c0392b;
+    }
+
+    .stock-low {
+        color: #e74c3c;
+        font-weight: bold;
+    }
+
+    .stock-ok {
+        color: #2ecc71;
+        font-weight: bold;
+    }
+</style>
+
+<div class="page-container">
+    <h1 class="page-title">Medicines Management</h1>
+
+    <a asp-page="/Staff/AddMedicine" class="add-button">
+        <i class="fas fa-plus-circle"></i> Add New Medicine
+    </a>
+
+    <table class="medicines-table">
+        <thead>
+            <tr>
+                <th>Medicine Name</th>
+                <th>Medicine ID</th>
+                <th>Stock</th>
+                <th>Category</th>
+                <th>Expiry Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var medicine in Model.Medicines)
+            {
+                <tr>
+                    <td>@medicine.Name</td>
+                    <td>@medicine.medicineId</td>
+                    <td class="@(medicine.CurrentStock < 10 ? "stock-low" : "stock-ok")">
+                        @medicine.CurrentStock
+                    </td>
+                    <td>@medicine.Category</td>
+                    <td>@medicine.Expirydate</td>
+                    <td>
+                        <div class="action-buttons">
+                            <a asp-page="/Staff/EditMedicine" asp-route-id="@medicine.medicineId" class="edit-btn">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <form method="post" asp-page-handler="Delete" class="delete-form">
+                                <input type="hidden" name="id" value="@medicine.medicineId" />
+                                <button type="submit" class="delete-btn">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a asp-page="/Staff/Dashboard">Return</a>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">

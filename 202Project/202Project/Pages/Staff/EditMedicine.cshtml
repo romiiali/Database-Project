@@ -1,0 +1,97 @@
+﻿@page
+@model _202Project.Pages.Staff.EditMedicineModel
+@{
+    ViewData["Title"] = "Edit Medicine";
+}
+
+<form method="post" asp-page-handler="Edit">
+    <input type="hidden" asp-for="Medicine.MedicineId" />
+    <div class="col-md-6">
+        <h4 class="border-bottom pb-2">Medicine Information</h4>
+        <div class="mb-3">
+            <label class="form-label">Commercial Name *</label>
+            <input asp-for="Medicine.CommercialName" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Scientific Name</label>
+            <input asp-for="Medicine.ScientificName" class="form-control" />
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Price *</label>
+                <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <input asp-for="Medicine.Price" class="form-control" type="number" step="0.01" required />
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Dosage</label>
+                <div class="input-group">
+                    <input asp-for="Medicine.Dosage" class="form-control" type="number" step="0.1" />
+                    <span class="input-group-text">mg</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Category *</label>
+            <select asp-for="Medicine.CategoryId" asp-items="Model.Categories"
+                    class="form-select" required>
+                <option value="">-- Select Category --</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Reorder Level *</label>
+            <input asp-for="Medicine.ReorderQuantity" class="form-control"
+                   type="number" min="0" required />
+            <small class="text-muted">Alert when stock falls below this quantity</small>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h4 class="border-bottom pb-2">Batch Information</h4>
+
+        <div class="mb-3">
+            <label class="form-label">Batch Number *</label>
+            <input asp-for="Batch.BatchNumber" class="form-control" required />
+            <small class="text-muted">Manufacturer's batch code</small>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Supplier *</label>
+            <select asp-for="Batch.SupplierId" asp-items="Model.Suppliers"
+                    class="form-select" required>
+                <option value="">-- Select Supplier --</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Quantity Received *</label>
+            <input asp-for="Batch.QuantityRecieved" class="form-control"
+                   type="number" min="1" required />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Arrival Date *</label>
+            <input asp-for="Batch.ArrivalDate" class="form-control"
+                   type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")"
+                   max="@DateTime.Today.AddMonths(1).ToString("yyyy-MM-dd")" required />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Expiry Date</label>
+            <input asp-for="Batch.ExpiryDate" class="form-control"
+                   type="date" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+            <small class="text-muted">Optional - Can be added later</small>
+        </div>
+    </div>
+    <div class="mt-4 pt-3 border-top">
+        <button type="submit" class="btn btn-success px-4">
+            <i class="bi bi-check-circle"></i> Update
+        </button>
+        <a asp-page="/Staff/Medicine">Return</a>
+    </div>
+</form>

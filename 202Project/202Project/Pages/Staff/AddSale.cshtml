@@ -1,0 +1,159 @@
+﻿@page
+@model _202Project.Pages.Staff.AddSaleModel
+@{
+    ViewData["Title"] = "Add New Sale";
+}
+
+<h1>Add New Sale</h1>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="Sale.CustomerId" class="control-label">Customer</label>
+        <select asp-for="Sale.CustomerId"
+                asp-items="Model.Customers"
+                class="form-control">
+            <option value="">-- Select Customer --</option>
+        </select>
+        <span asp-validation-for="Sale.CustomerId" class="text-danger"></span>
+    </div>
+
+    <h3>Sale Items</h3>
+    
+    <!-- Hidden field to track number of medicine items -->
+    <input type="hidden" name="ItemCount" value="@Model.MedicineItems.Count" />
+    
+    @if (Model.MedicineItems.Count == 0)
+    {
+        <div class="card mb-3 medicine-card">
+            <div class="card-body">
+                <h5>Item 1</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Medicine</label>
+                            <select name="MedicineItems[0].BatchId" 
+                                    asp-items="Model.Medicines"
+                                    class="form-control">
+                                <option value="">-- Select Medicine --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>Quantity</label>
+                            <input name="MedicineItems[0].Quantity" 
+                                   class="form-control" 
+                                   min="1" 
+                                   value="1" />
+                        </div>
+                    </div>
+                    <div class="col-md-1 remove-btn">
+                        <button type="submit" 
+                                name="removeIndex" 
+                                value="0" 
+                                class="btn btn-danger btn-sm mt-4"
+                                formnovalidate>
+                            ×
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- Render all existing medicine items -->
+        @for (int i = 0; i < Model.MedicineItems.Count; i++)
+        {
+            <div class="card mb-3 medicine-card">
+                <div class="card-body">
+                    <h5>Item @(i + 1)</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Medicine</label>
+                                <select name="MedicineItems[@i].BatchId" 
+                                        asp-items="Model.Medicines"
+                                        class="form-control">
+                                    <option value="">-- Select Medicine --</option>
+                                </select>
+                                @if (Model.MedicineItems[i].BatchId > 0)
+                                {
+                                    <script>
+                                        // Set the selected value for this dropdown
+                                        document.querySelector('select[name="MedicineItems[@i].BatchId"]').value = '@Model.MedicineItems[i].BatchId';
+                                    </script>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>Quantity</label>
+                                <input name="MedicineItems[@i].Quantity" 
+                                       class="form-control" 
+                                       min="1" 
+                                       value="@Model.MedicineItems[i].Quantity" />
+                            </div>
+                        </div>
+                        <div class="col-md-1 remove-btn">
+                            <button type="submit" 
+                                    name="removeIndex" 
+                                    value="@i" 
+                                    class="btn btn-danger btn-sm mt-4"
+                                    formnovalidate>
+                                ×
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+    <div class="mb-3">
+        <!-- Add Medicine button -->
+        <button type="submit" 
+                name="action" 
+                value="add" 
+                class="btn btn-outline-primary"
+                formnovalidate>
+            <i class="fas fa-plus"></i> Add Another Medicine
+        </button>
+        <small class="text-muted d-block mt-1">You can add multiple medicines to this sale</small>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Sale.Discount" class="control-label">Discount ($)</label>
+        <input asp-for="Sale.Discount" class="form-control" min="0" step="0.01" />
+        <span asp-validation-for="Sale.Discount" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" name="action" value="submit" class="btn btn-primary">Complete Sale</button>
+        <a asp-page="/Staff/Sale" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+
+<style>
+    .medicine-card {
+        border-left: 4px solid #007bff;
+    }
+    
+    .medicine-card h5 {
+        color: #007bff;
+        margin-bottom: 15px;
+    }
+    
+    .remove-btn {
+        margin-top: 25px;
+    }
+</style>

@@ -1,0 +1,79 @@
+﻿@page
+@model _202Project.Pages.Staff.ReorderPageModel
+@{
+    ViewData["Title"] = "Reorder Medicine";
+}
+
+<h2>Reorder Medicine: @Model.MedicineName</h2>
+<p><strong>Current Stock:</strong> @Model.CurrentStock units</p>
+<hr />
+
+<form method="post">
+    <!-- Hidden fields -->
+    <input type="hidden" asp-for="PurchaseOrder.MedicineId" />
+    <div class="mb-3">
+        <label class="form-label">Select Staff Member *</label>
+        <select asp-for="PurchaseOrder.StaffId" class="form-select" required>
+            <option value="">-- Select Staff --</option>
+            @foreach (var staff in Model.Staff)
+            {
+                <option value="@staff.StaffId">@staff.StaffName</option>
+            }
+        </select>
+        @if (Model.Staff.Count == 0)
+        {
+            <div class="text-danger">
+                No staff members found.
+            </div>
+        }
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Select Supplier *</label>
+        <select asp-for="PurchaseOrder.SupplierId" class="form-select" required>
+            <option value="">-- Select a Supplier --</option>
+            @foreach (var supplier in Model.Suppliers)
+            {
+                <option value="@supplier.SupplierId">@supplier.SupplierName</option>
+            }
+        </select>
+        @if (Model.Suppliers.Count == 0)
+        {
+            <div class="text-danger">
+                No suppliers found for this medicine. Please add a batch with a supplier first.
+            </div>
+        }
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Quantity to Order *</label>
+        <input asp-for="PurchaseOrder.Quantity" class="form-control" type="number" min="1" required />
+        <small class="text-muted">Enter the number of units to purchase</small>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Expected Delivery Date *</label>
+        <input asp-for="PurchaseOrder.ExpectedDate" class="form-control" type="date"
+               min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")"
+               value="@Model.PurchaseOrder.ExpectedDate.ToString("yyyy-MM-dd")" required />
+    </div>
+
+    <div class="mb-3">
+        <button type="submit" class="btn btn-success">Place Purchase Order</button>
+        <a asp-page="/Staff/Medicines" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}

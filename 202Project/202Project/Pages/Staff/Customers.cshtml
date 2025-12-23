@@ -1,0 +1,174 @@
+﻿@page
+@model _202Project.Pages.Staff.CustomersModel
+@{
+}
+
+<style>
+    .page-container {
+        max-width: 1200px;
+        margin: 30px auto;
+        padding: 25px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    .page-title {
+        color: #2c3e50;
+        margin-bottom: 30px;
+        font-size: 2.2rem;
+        font-weight: bold;
+        text-align: center;
+        padding-bottom: 15px;
+        border-bottom: 3px solid #9b59b6;
+    }
+
+    .add-button {
+        display: inline-block;
+        margin-bottom: 25px;
+        padding: 12px 25px;
+        background: #9b59b6;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .add-button:hover {
+        background: #8e44ad;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+        text-decoration: none;
+        color: white;
+    }
+
+    .customers-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    }
+
+    .customers-table thead {
+        background: #9b59b6;
+        color: white;
+    }
+
+    .customers-table th {
+        padding: 18px 15px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    .customers-table td {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        color: #333;
+    }
+
+    .customers-table tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .edit-btn {
+        padding: 8px 16px;
+        background: #9b59b6;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+    }
+
+    .edit-btn:hover {
+        background: #8e44ad;
+        text-decoration: none;
+        color: white;
+    }
+
+    .delete-form {
+        display: inline;
+    }
+
+    .delete-btn {
+        padding: 8px 16px;
+        background: #e74c3c;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .delete-btn:hover {
+        background: #c0392b;
+    }
+
+    .customer-name {
+        font-weight: 500;
+        color: #2c3e50;
+    }
+</style>
+
+<div class="page-container">
+    <h1 class="page-title">Customer Management</h1>
+
+    <a asp-page="/Staff/AddCustomer" class="add-button">
+        <i class="fas fa-user-plus"></i> Add New Customer
+    </a>
+
+    <table class="customers-table">
+        <thead>
+            <tr>
+                <th>Customer ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model.Customers)
+            {
+                <tr>
+                    <td>@customer.CustomerID</td>
+                    <td class="customer-name">@customer.FName</td>
+                    <td class="customer-name">@customer.LName</td>
+                    <td>@customer.Phone</td>
+                    <td>@customer.Email</td>
+                    <td>
+                        <div class="action-buttons">
+                            <a asp-page="/Staff/EditCustomer" asp-route-id="@customer.CustomerID" class="edit-btn">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <form method="post" asp-page-handler="Delete" class="delete-form">
+                                <input type="hidden" name="id" value="@customer.CustomerID" />
+                                <button type="submit" class="delete-btn">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a asp-page="/Staff/Dashboard" class="edit-btn">Return</a>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">

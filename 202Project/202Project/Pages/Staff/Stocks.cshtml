@@ -1,0 +1,84 @@
+﻿@page
+@model _202Project.Pages.Staff.StocksModel
+@{
+    ViewData["Title"] = "Stock Alerts";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4">📊 Stock Alerts</h1>
+
+    <div class="alert alert-info">
+        <i class="bi bi-info-circle"></i> Showing medicines with low stock or approaching expiry
+    </div>
+
+    @if (Model.Medicines.Count == 0)
+    {
+        <div class="alert alert-success">
+            <i class="bi bi-check-circle"></i> No stock alerts at this time!
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Medicine Name</th>
+                        <th>Category</th>
+                        <th>Current Stock</th>
+                        <th>Supplier</th>
+                        <th>Expiry Date</th>
+                        <th>Alert Date</th>
+                        <th>Alert Type</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var medicine in Model.Medicines)
+                    {
+                        <tr class="@(medicine.AlertType.Contains("Low") ? "table-warning" :
+                                                               medicine.AlertType.Contains("Expiry") ? "table-danger" : "")">
+                    <td>@medicine.medicineId</td>
+                    <td>@medicine.CommercialName</td>
+                    <td>@medicine.CategoryName</td>
+                    <td>
+                        <span class="badge @(medicine.Stock < 10 ? "bg-danger" : "bg-warning")">
+                            @medicine.Stock
+                        </span>
+                    </td>
+                    <td>@(medicine.SupplierName ?? "N/A")</td>
+                    <td>@(medicine.ExpiryDate?.ToString("yyyy-MM-dd") ?? "N/A")</td>
+                    <td>@medicine.AlertDate.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>
+                        <span class="badge @(medicine.AlertType.Contains("Low") ? "bg-warning" : "bg-danger")">
+                            @medicine.AlertType
+                        </span>
+                    </td>
+                    <td>
+                        <a asp-page="/Staff/ReorderPage" asp-route-id="@medicine.medicineId"
+                           class="btn btn-sm btn-primary">
+                            <i class="bi bi-cart-plus"></i> Reorder
+                        </a>
+                    </td>
+                </tr>
+                                }
+                </tbody>
+            </table>
+        </div>
+    }
+    <a asp-page="/Staff/Dashboard">Return</a>
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+<style>
+    .table th {
+        font-weight: 600;
+        background-color: #f8f9fa;
+    }
+
+    .badge {
+        font-size: 0.85em;
+        padding: 0.35em 0.65em;
+    }
+</style>

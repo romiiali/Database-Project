@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace PharmacySystem.Models
+namespace _202Project.models
 {
     public class Supplier
     {

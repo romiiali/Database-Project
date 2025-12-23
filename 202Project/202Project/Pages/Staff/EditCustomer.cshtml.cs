@@ -28,7 +28,7 @@ namespace _202Project.Pages.Staff
                         {
                             CustomerForm = new Customer 
                             {
-                                CustomerID = reader.GetInt32(0),
+                                Id = reader.GetInt32(0),
                                 FName = reader.GetString(1),
                                 LName = reader.GetString(2),
                                 Phone = reader.IsDBNull(3) ? (int?)null : reader.GetInt32(3),
@@ -83,7 +83,7 @@ namespace _202Project.Pages.Staff
 
                     using (var cmd = new SqlCommand(customerQuery, con))
                     {
-                        cmd.Parameters.AddWithValue("@id", CustomerForm.CustomerID);
+                        cmd.Parameters.AddWithValue("@id", CustomerForm.Id);
 
                         foreach (SqlParameter param in customerparams.Parameters)
                         {

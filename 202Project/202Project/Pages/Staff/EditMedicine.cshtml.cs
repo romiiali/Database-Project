@@ -173,7 +173,7 @@ namespace _202Project.Pages.Staff
                         {
                             Batch.BatchId = reader.GetInt32(0);
                             Batch.BatchNumber = reader.GetInt32(1);
-                            Batch.SupplierId = reader.GetInt32(2);
+                            Batch.SupplierId = reader.IsDBNull(2) ? 0 : reader.GetInt32(2);
                             Batch.QuantityRecieved = reader.GetInt32(3);
                             Batch.ArrivalDate = reader.GetDateTime(4);
                             Batch.ExpiryDate = reader.IsDBNull(5) ? (DateTime?)null : reader.GetDateTime(5);

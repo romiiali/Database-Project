@@ -22,7 +22,7 @@ namespace _202Project.Pages.Staff
             {
                 var customer = new Customer
                 {
-                    CustomerID = reader.GetInt32(0),
+                    Id = reader.GetInt32(0),
                     FName = reader.GetString(1),
                     LName = reader.GetString(2),
                     Phone = reader.GetInt32(3),

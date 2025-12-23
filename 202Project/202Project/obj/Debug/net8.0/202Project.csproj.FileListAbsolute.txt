@@ -170,3 +170,4 @@ C:\Users\loq\OneDrive\Desktop\202Project\202Project\202Project\obj\Debug\net8.0\
 C:\Users\loq\OneDrive\Desktop\202Project\202Project\202Project\obj\Debug\net8.0\202Project.csproj.Up2Date
 C:\Users\loq\OneDrive\Desktop\202Project\202Project\202Project\obj\Debug\net8.0\202Project.genruntimeconfig.cache
 C:\Users\loq\OneDrive\Desktop\202Project\202Project\202Project\obj\Debug\net8.0\ref\202Project.dll
+C:\Users\loq\OneDrive\Desktop\202Project\202Project\202Project\obj\Debug\net8.0\202Project.sourcelink.json

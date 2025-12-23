@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PharmacySystem.Models
+namespace _202Project.models
 {
     public class Batch
     {

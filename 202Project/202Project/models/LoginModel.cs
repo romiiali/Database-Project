@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace PharmacyLogin.Models
+namespace _202Project.models
 {
     public class LoginInputModel
     {

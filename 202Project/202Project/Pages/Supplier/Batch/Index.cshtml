@@ -1,0 +1,32 @@
+@page
+@model PharmacySystem.Pages.Staff.Batch.IndexModel
+@{ Layout = "_Layout"; }
+
+<h1>Inventory Batches</h1>
+
+<p>
+    <a asp-page="Create" class="btn btn-primary">Add New Batch</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Batch #</th>
+            <th>Medicine</th>
+            <th>Supplier</th>
+            <th>Quantity</th>
+            <th>Expiry</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.BatchList) {
+        <tr>
+            <td>@item.BatchNumber</td>
+            <td>@item.Medicine?.CommercialName</td>
+            <td>@item.Supplier?.SupplierName</td>
+            <td>@item.QuantityRecieved</td>
+            <td>@item.ExpiryDate.ToShortDateString()</td>
+        </tr>
+}
+    </tbody>
+</table>

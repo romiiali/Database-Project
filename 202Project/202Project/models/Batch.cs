@@ -1,40 +1,29 @@
-﻿using _202Project.models;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace _202Project.models
+namespace PharmacySystem.Models
 {
     public class Batch
     {
         [Key]
         public int BatchID { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        public string BatchNumber { get; set; }
+        public int BatchNumber { get; set; }
 
-        [Required]
+        [DataType(DataType.Date)]
         public DateTime ExpiryDate { get; set; }
 
-        public int QuantityReceived { get; set; }
-
-        [Required]
+        [DataType(DataType.Date)]
         public DateTime ArrivalDate { get; set; }
 
-        // Foreign Keys
+        public int QuantityRecieved { get; set; }
+
+        // Relationship to Medicine
         public int MedicineID { get; set; }
+        public Medicine? Medicine { get; set; }
+
+        // Relationship to Supplier
         public int SupplierID { get; set; }
-
-        // Navigation Properties
-        [ForeignKey("MedicineID")]
-        public virtual Medicine Medicine { get; set; }
-
-        [ForeignKey("SupplierID")]
-        public virtual Supplier Supplier { get; set; }
-
-        public virtual ICollection<StockAlert> StockAlerts { get; set; }
-        public virtual ICollection<SaleItem> SaleItems { get; set; }
+        public Supplier? Supplier { get; set; }
     }
 }

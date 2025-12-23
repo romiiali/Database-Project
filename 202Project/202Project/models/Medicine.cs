@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace _202Project.models
+namespace PharmacySystem.Models
 {
     public class Medicine
     {
@@ -10,31 +9,17 @@ namespace _202Project.models
         public int MedicineID { get; set; }
 
         [Required]
-        [StringLength(200)]
-        public string ScientificName { get; set; }
+        public string CommercialName { get; set; } 
 
-        [Required]
-        [StringLength(200)]
-        public string CommercialName { get; set; }
+        public string ScientificName { get; set; } 
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
 
-        [StringLength(100)]
         public string Dosage { get; set; }
 
-        public int RecorderQuantity { get; set; }
+        public int ReorderQuantity { get; set; } 
 
         public int CategoryID { get; set; }
-
-        [StringLength(100)]
-        public string CategoryName { get; set; }
-
-        [StringLength(500)]
-        public string Description { get; set; }
-
-        // Navigation Properties
-        public virtual ICollection<Batch> Batches { get; set; }
-        public virtual ICollection<StockAlert> StockAlerts { get; set; }
     }
 }

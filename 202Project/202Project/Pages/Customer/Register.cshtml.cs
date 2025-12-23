@@ -1,37 +1,69 @@
+// Pages/Customer/Register.cshtml.cs
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using PharmacySystem.Data;
-using PharmacySystem.Models;
+using user_pages.Data;
+using user_pages.Models;
 
-namespace PharmacySystem.Pages.Customer
+namespace user_pages.Pages.Customer
 {
     public class RegisterModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly AppDbContext _context;
 
-        public RegisterModel(ApplicationDbContext context)
+        public RegisterModel(AppDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public Models.Customer NewCustomer { get; set; } = default!;
+        public CustomerInputModel CustomerInput { get; set; } = new CustomerInputModel();
+
+        [TempData]
+        public string? SuccessMessage { get; set; }
+
+        [TempData]
+        public string? ErrorMessage { get; set; }
 
         public void OnGet()
         {
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Customers.Add(NewCustomer);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var customer = new Customer
+                {
+                    FName = CustomerInput.FName,
+                    LName = CustomerInput.LName,
+                    Phone = CustomerInput.Phone,
+                    Email = string.IsNullOrEmpty(CustomerInput.Email) ? null : CustomerInput.Email
+                };
 
-            return RedirectToPage("/Index");
+                _context.Customers.Add(customer);
+                _context.SaveChanges();
+
+                SuccessMessage = $"Registration successful! Your customer ID is: {customer.CustomerID}";
+                return RedirectToPage("/Customer/Dashboard");
+            }
+            catch (Exception)
+            {
+                ErrorMessage = "An error occurred during registration. Please try again.";
+                return Page();
+            }
+        }
+
+        public class CustomerInputModel
+        {
+            public string FName { get; set; } = string.Empty;
+            public string LName { get; set; } = string.Empty;
+            public string Phone { get; set; } = string.Empty;
+            public string? Email { get; set; }
         }
     }
 }

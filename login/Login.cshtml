@@ -1,0 +1,33 @@
+@page
+@model PharmacyLogin.Pages.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container mt-5" style="max-width: 400px; margin: auto;">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white text-center">
+            <h3>Pharmacy System</h3>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div class="mb-3">
+                    <label>Email Address</label>
+                    <input asp-for="Input.Email" class="form-control" placeholder="admin@pharma.com" />
+                </div>
+                <div class="mb-3">
+                    <label>Password</label>
+                    <input asp-for="Input.Password" type="password" class="form-control" placeholder="admin123" />
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Sign In</button>
+            </form>
+            
+            @if(ViewData["Message"] != null)
+            {
+                <div class="alert alert-danger mt-3 text-center">
+                    @ViewData["Message"]
+                </div>
+            }
+        </div>
+    </div>
+</div>

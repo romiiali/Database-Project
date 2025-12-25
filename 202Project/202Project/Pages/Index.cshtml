@@ -4,9 +4,111 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<style>
+    .dashboard-container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .dashboard-title {
+        color: #2c3e50;
+        margin-bottom: 40px;
+        font-size: 2.5rem;
+        font-weight: bold;
+    }
+
+    .dashboard-links {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    .dashboard-link {
+        display: block;
+        padding: 25px 15px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .dashboard-link:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        text-decoration: none;
+        color: white;
+    }
+
+    .dashboard-link i {
+        margin-right: 10px;
+        font-size: 1.3rem;
+    }
+
+    /* Different colors for different links */
+    .dashboard-link:nth-child(1) {
+        background: #3498db;
+    }
+
+    .dashboard-link:nth-child(2) {
+        background: #2ecc71;
+    }
+
+    .dashboard-link:nth-child(3) {
+        background: #e74c3c;
+    }
+
+    .dashboard-link:nth-child(4) {
+        background: #f39c12;
+    }
+
+    .dashboard-link:nth-child(5) {
+        background: #9b59b6;
+    }
+
+    .dashboard-link:nth-child(1):hover {
+        background: #2980b9;
+    }
+
+    .dashboard-link:nth-child(2):hover {
+        background: #27ae60;
+    }
+
+    .dashboard-link:nth-child(3):hover {
+        background: #c0392b;
+    }
+
+    .dashboard-link:nth-child(4):hover {
+        background: #d35400;
+    }
+
+    .dashboard-link:nth-child(5):hover {
+        background: #8e44ad;
+    }
+</style>
+
+<div class="dashboard-container">
+    <h1 class="dashboard-title">User Management Dashboard</h1>
+
+    <div class="dashboard-links">
+        <a asp-page="/Customer/Dashboard" class="dashboard-link">
+            <i class="fas fa-user"></i> Customer        </a>
+
+        <a asp-page="/Staff/Dahsboard" class="dashboard-link">
+            <i class="fas fa-user-tie"></i> Staff
+        </a>
+
+        <a asp-page="/Supplier/Supplier/Index" class="dashboard-link">
+            <i class="fas fa-truck"></i> Supplier
+        </a>
+    </div>
 </div>
 
-<h1>Number of customers: @Model.useCount</h1>
+<!-- Add Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">

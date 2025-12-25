@@ -143,21 +143,21 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var customer in Model.Customers)
+            @foreach (var customer in Model.Customer)
             {
                 <tr>
-                    <td>@customer.Id</td>
+                    <td>@customer.CustomerId</td>
                     <td class="customer-name">@customer.FName</td>
                     <td class="customer-name">@customer.LName</td>
                     <td>@customer.Phone</td>
                     <td>@customer.Email</td>
                     <td>
                         <div class="action-buttons">
-                            <a asp-page="/Staff/EditCustomer" asp-route-id="@customer.Id" class="edit-btn">
+                            <a asp-page="/Staff/EditCustomer" asp-route-id="@customer.CustomerId" class="edit-btn">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
                             <form method="post" asp-page-handler="Delete" class="delete-form">
-                                <input type="hidden" name="id" value="@customer.Id" />
+                                <input type="hidden" name="id" value="@customer.CustomerId" />
                                 <button type="submit" class="delete-btn">
                                     <i class="fas fa-trash"></i> Delete
                                 </button>

@@ -1,0 +1,173 @@
+﻿@page
+@model _202Project.Pages.Customer.RegisterModel
+@{
+    Layout = "_CustomerLayout";
+    ViewData["Title"] = "Customer Registration";
+}
+
+<style>
+    .register-container {
+        max-width: 600px;
+        margin: 30px auto;
+        padding: 20px;
+    }
+    
+    .register-card {
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+    }
+    
+    .form-group {
+        margin-bottom: 25px;
+    }
+    
+    .form-label {
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 8px;
+        display: block;
+    }
+    
+    .form-control {
+        padding: 12px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+    
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        outline: none;
+    }
+    
+    .btn-register {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        width: 100%;
+        margin-top: 20px;
+    }
+    
+    .btn-register:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    }
+    
+    .btn-back {
+        color: #667eea;
+        text-decoration: none;
+        display: inline-block;
+        margin-bottom: 20px;
+    }
+    
+    .btn-back:hover {
+        text-decoration: underline;
+    }
+    
+    .alert-success {
+        background: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: #155724;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+    
+    .alert-error {
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+    
+    .text-danger {
+        color: #e74c3c;
+        font-size: 0.9rem;
+        margin-top: 5px;
+        display: block;
+    }
+    
+    .required::after {
+        content: " *";
+        color: #e74c3c;
+    }
+</style>
+
+<div class="register-container">
+    <a href="/Customer/Dashboard" class="btn-back">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </a>
+    
+    @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+    {
+        <div class="alert-success">
+            <i class="fas fa-check-circle"></i> @Model.SuccessMessage
+        </div>
+    }
+    
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert-error">
+            <i class="fas fa-exclamation-circle"></i> @Model.ErrorMessage
+        </div>
+    }
+    
+    <div class="register-card">
+        <h2 style="color: #2c3e50; margin-bottom: 10px; text-align: center;">Customer Registration</h2>
+        <p style="color: #7f8c8d; text-align: center; margin-bottom: 30px;">
+            Fill in your details to register as a customer
+        </p>
+        
+        <form method="post">
+            <div class="form-group">
+                <label class="form-label required">First Name</label>
+                <input asp-for="CustomerInput.FName" class="form-control" placeholder="Enter your first name" />
+                <span asp-validation-for="CustomerInput.FName" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label required">Last Name</label>
+                <input asp-for="CustomerInput.LName" class="form-control" placeholder="Enter your last name" />
+                <span asp-validation-for="CustomerInput.LName" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label required">Phone Number</label>
+                <input asp-for="CustomerInput.Phone" class="form-control" placeholder="Enter your phone number" />
+                <span asp-validation-for="CustomerInput.Phone" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input asp-for="CustomerInput.Email" type="email" class="form-control" placeholder="Enter your email address" />
+                <span asp-validation-for="CustomerInput.Email" class="text-danger"></span>
+                <small style="color: #7f8c8d; margin-top: 5px; display: block;">Optional but recommended for order updates</small>
+            </div>
+            
+            <button type="submit" class="btn-register">
+                <i class="fas fa-user-plus"></i> Register Now
+            </button>
+        </form>
+        
+        <div style="text-align: center; margin-top: 30px; color: #7f8c8d;">
+            <p>Already have an account? <a href="/Customer/Dashboard" style="color: #667eea;">Browse medicines</a></p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

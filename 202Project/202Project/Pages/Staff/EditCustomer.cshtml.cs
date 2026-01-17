@@ -6,10 +6,20 @@ using System.Collections.Generic;
 
 namespace _202Project.Pages.Staff
 {
+    public class Customers
+    {
+        public int CustomerId { get; set; }
+        public string? Email { get; set; } = string.Empty;
+        public string? Password { get; set; } = string.Empty;
+        public string? FName { get; set; } = string.Empty;
+        public string? LName { get; set; } = string.Empty;
+        public int? Phone { get; set; }
+
+    }
     public class EditCustomerModel : PageModel
     {
         [BindProperty]
-        public Customer CustomerForm { get; set; }
+        public Customers CustomerForm { get; set; }
         static string connectionString = "Data Source=localhost;Initial Catalog=PharmacyDatabase;Integrated Security=True;TrustServerCertificate=True";
         public void OnGet(int id)
         {
@@ -26,9 +36,9 @@ namespace _202Project.Pages.Staff
                     {
                         if (reader.Read())
                         {
-                            CustomerForm = new Customer 
+                            CustomerForm = new Customers 
                             {
-                                Id = reader.GetInt32(0),
+                                CustomerId = reader.GetInt32(0),
                                 FName = reader.GetString(1),
                                 LName = reader.GetString(2),
                                 Phone = reader.IsDBNull(3) ? (int?)null : reader.GetInt32(3),
@@ -83,7 +93,7 @@ namespace _202Project.Pages.Staff
 
                     using (var cmd = new SqlCommand(customerQuery, con))
                     {
-                        cmd.Parameters.AddWithValue("@id", CustomerForm.Id);
+                        cmd.Parameters.AddWithValue("@id", CustomerForm.CustomerId);
 
                         foreach (SqlParameter param in customerparams.Parameters)
                         {

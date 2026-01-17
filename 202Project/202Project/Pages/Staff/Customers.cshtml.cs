@@ -7,8 +7,18 @@ namespace _202Project.Pages.Staff
 {
     public class CustomersModel : PageModel
     {
-         
-        public List<Customer> Customers { get; set; } = new List<Customer>();
+        public class Customers
+        {
+            public int CustomerId { get; set; }
+            public string? Email { get; set; } = string.Empty;
+            public string? Password { get; set; } = string.Empty;
+            public string? FName { get; set; } = string.Empty;
+            public string? LName { get; set; } = string.Empty;
+            public int? Phone { get; set; }
+
+        }
+
+        public List<Customers> Customer { get; set; } = new List<Customers>();
 
         static string connectionString = "Data Source = localhost; Initial Catalog = PharmacyDatabase; Integrated Security = True; Trust Server Certificate=True";
         SqlConnection con = new SqlConnection(connectionString);
@@ -20,15 +30,15 @@ namespace _202Project.Pages.Staff
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                var customer = new Customer
+                var customer = new Customers
                 {
-                    Id = reader.GetInt32(0),
+                    CustomerId = reader.GetInt32(0),
                     FName = reader.GetString(1),
                     LName = reader.GetString(2),
                     Phone = reader.GetInt32(3),
                     Email = reader.GetString(4)
                 };
-                Customers.Add(customer);
+                Customer.Add(customer);
             }
             ;
             reader.Close();

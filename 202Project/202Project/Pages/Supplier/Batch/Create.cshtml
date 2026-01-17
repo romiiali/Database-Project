@@ -1,0 +1,39 @@
+@page
+@model _202Project.Pages.Staff.Batch.CreateModel
+@{
+    Layout = "_Layout";
+}
+
+<h2>Add New Batch (Inventory)</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div class="mb-3">
+                <label>Medicine Name</label>
+                <select asp-for="Batch.MedicineID" class="form-control" asp-items="ViewBag.MedicineID"></select>
+            </div>
+            <div class="mb-3">
+                <label>Supplier Name</label>
+                <select asp-for="Batch.SupplierID" class="form-control" asp-items="ViewBag.SupplierID"></select>
+            </div>
+            <div class="mb-3">
+                <label>Batch Number</label>
+                <input asp-for="Batch.BatchNumber" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label>Quantity Recieved</label>
+                <input asp-for="Batch.QuantityRecieved" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label>Production Date</label>
+                <input asp-for="Batch.ArrivalDate" type="date" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label>Expiry Date</label>
+                <input asp-for="Batch.ExpiryDate" type="date" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-success">Save Batch</button>
+        </form>
+    </div>
+</div>

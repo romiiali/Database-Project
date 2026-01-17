@@ -1,0 +1,32 @@
+@page
+@model _202Project.Pages.Customer.IndexModel
+@{
+    Layout = "_Layout";
+}
+
+<h1>Customer List</h1>
+
+<p>
+    <a asp-page="Register" class="btn btn-primary">Register New Customer</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.CustomerList) {
+        <tr>
+            <td>@item.FName</td>
+            <td>@item.LName</td>
+            <td>@item.Phone</td>
+            <td>@item.Email</td>
+        </tr>
+}
+    </tbody>
+</table>
